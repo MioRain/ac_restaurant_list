@@ -14,11 +14,12 @@ app.get('/', (req, res) => {
 })
 
 app.get('/search', (req, res) => {
-  const keyword = req.query.keyword.trim().toLowerCase()
+  const keyword = req.query.keyword.trim()
+  const regex = new RegExp(keyword, 'i')
   const restaurants = restaurantList.results.filter((restaurant) => {
     const searchItems = [restaurant.name, restaurant.name_en, restaurant.category]
     for (let i in searchItems) {
-      if (searchItems[i].toLowerCase().includes(keyword)) return true
+      if (searchItems[i].match(regex)) return true
     }
   })
   res.render('index', { restaurants, keyword })
