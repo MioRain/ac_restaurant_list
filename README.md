@@ -24,7 +24,7 @@ git clone https://github.com/MioRain/ac_restaurant_list.git
 ```
 2. 進入專案資料夾並載入相關套件
 ```
-cd restaurant_list
+cd ac_restaurant_list
 npm install nodemon
 npm install
 ```
