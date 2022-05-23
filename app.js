@@ -5,7 +5,6 @@ const exphbs = require('express-handlebars')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 const Restaurant = require('./models/Restaurant')
-const restaurantList = require('./restaurant.json')
 
 const app = express()
 const port = 3000
@@ -28,6 +27,9 @@ db.once('open', () => {
   console.log('MongoDB connected!')
 })
 
+// 路由設計
+
+// render index
 app.get('/', (req, res) => {
   Restaurant.find()
     .lean()
@@ -35,18 +37,29 @@ app.get('/', (req, res) => {
     .catch(error => console.error(error))
 })
 
+
+// search restaurant
 app.get('/search', (req, res) => {
   const keyword = req.query.keyword
-  const regex = new RegExp(keyword.trim(), 'i')
-  const restaurants = Restaurant.find((restaurant) => {
-    const searchItems = [restaurant.name, restaurant.name_en, restaurant.category]
-    for (let i in searchItems) {
-      if (searchItems[i].match(regex)) return true
-    }
+  const $regex = new RegExp(keyword.trim(), 'i')
+  Restaurant.find({
+    $or: [
+      {
+        name: { $regex },
+      }, {
+        name_en: { $regex },
+      }, {
+        category: { $regex },
+      }, {
+        location: { $regex }
+      }
+    ],
   })
-  res.render('index', { restaurants, keyword })
+    .lean()
+    .then(restaurants => res.render('index', { restaurants, keyword }))
 })
 
+// browse restaurant detail
 app.get('/restaurants/:restaurant_id', (req, res) => {
   const id = req.params.restaurant_id
   Restaurant.findOne({ id })
@@ -55,6 +68,8 @@ app.get('/restaurants/:restaurant_id', (req, res) => {
     .catch(error => console.error(error))
 })
 
+
+// server listen
 app.listen(port, () => {
   console.log(`The Express server is running on http://localhost:${port}`)
 })
