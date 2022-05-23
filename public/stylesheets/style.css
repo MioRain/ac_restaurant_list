@@ -57,12 +57,18 @@ header {
   border-color: #ced4da;
 }
 
+.card-columns {
+  height: 120%;
+}
+
 .card {
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+
 }
 
 .card-columns .card {
   margin: 0.5rem 0rem;
+  margin-bottom: 40px;
 }
 
 .card img {
@@ -77,6 +83,9 @@ header {
 }
 
 .foot {
+  position: absolute;
+  right: 0px;
+  bottom: -40px;
   display: flex;
   justify-content: space-between;
   align-items: center;

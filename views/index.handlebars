@@ -38,19 +38,19 @@
             </span>
 
           </div>
-        </div>
-
-        {{!-- buttons --}}
-        <div class="foot">
-          <div class="space"></div>
-          <div class="foot-items">
-            <a class="btn btn-success btn-sm" href="./restaurants/{{ this.id }}">Edit</a>
-            <a class="btn btn-primary btn-sm" href="./restaurants/{{ this.id }}">Detail</a>
-            <form action="/" method="POST" style="display: inline">
-              <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-            </form>
+          {{!-- buttons --}}
+          <div class="foot">
+            <div class="space"></div>
+            <div class="foot-items">
+              <a class="btn btn-success btn-sm" href="./restaurants/{{ this.id }}">Edit</a>
+              <a class="btn btn-primary btn-sm" href="./restaurants/{{ this.id }}">Detail</a>
+              <form action="/" method="POST" style="display: inline">
+                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+              </form>
+            </div>
           </div>
         </div>
+
 
         <!-- Modal -->
         <div class="modal fade" id="showModal-{{ this.id }}" tabindex="-1" aria-labelledby="showModalLabel"
