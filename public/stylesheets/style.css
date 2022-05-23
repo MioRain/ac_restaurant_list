@@ -61,14 +61,25 @@ header {
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
 }
 
+.card-columns .card {
+  margin: 0.5rem 0rem;
+}
+
 .card img {
   height: 180px;
+  cursor: pointer;
 }
 
 .card-title {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .restaurant-category {
@@ -85,6 +96,10 @@ header {
   text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
+.modal-dialog {
+  max-width: 80%;
+}
+
 @media screen and (max-width: 992px) {
 
   .card img {
@@ -97,6 +112,14 @@ header {
   .restaurant-show-title {
     font-size: 2rem;
   }
+
+  .container {
+    max-width: 600px;
+  }
+
+  .modal-dialog {
+    max-width: 80%;
+  }
 }
 
 @media screen and (max-width: 575px) {
@@ -105,4 +128,7 @@ header {
     height: auto;
   }
 
+  .modal-dialog {
+    max-width: 100%;
+  }
 }

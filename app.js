@@ -4,6 +4,7 @@ const express = require('express')
 const exphbs = require('express-handlebars')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
+const Restaurant = require('./models/Restaurant')
 const restaurantList = require('./restaurant.json')
 
 const app = express()
@@ -28,13 +29,16 @@ db.once('open', () => {
 })
 
 app.get('/', (req, res) => {
-  res.render('index', { restaurants: restaurantList.results })
+  Restaurant.find()
+    .lean()
+    .then(restaurants => res.render('index', { restaurants }))
+    .catch(error => console.error(error))
 })
 
 app.get('/search', (req, res) => {
-  const keyword = req.query.keyword.trim()
-  const regex = new RegExp(keyword, 'i')
-  const restaurants = restaurantList.results.filter((restaurant) => {
+  const keyword = req.query.keyword
+  const regex = new RegExp(keyword.trim(), 'i')
+  const restaurants = Restaurant.find((restaurant) => {
     const searchItems = [restaurant.name, restaurant.name_en, restaurant.category]
     for (let i in searchItems) {
       if (searchItems[i].match(regex)) return true
@@ -44,10 +48,11 @@ app.get('/search', (req, res) => {
 })
 
 app.get('/restaurants/:restaurant_id', (req, res) => {
-  const restaurant = restaurantList.results.find((restaurant) => {
-    return restaurant.id.toString() === req.params.restaurant_id
-  })
-  res.render('show', { restaurant })
+  const id = req.params.restaurant_id
+  Restaurant.findOne({ id })
+    .lean()
+    .then(restaurant => res.render('show', { restaurant }))
+    .catch(error => console.error(error))
 })
 
 app.listen(port, () => {

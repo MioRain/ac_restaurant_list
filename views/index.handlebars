@@ -22,25 +22,91 @@
     <div class="col-md-10 col-12 mx-auto">
       <div class="card-columns">
         {{#each restaurants}}
-        <a href="/restaurants/{{ this.id }}" class="text-secondary">
-          <div class="card mb-3">
-            <img class="card-img-top" src="{{ this.image }}
-" alt="{{ this.name }}">
-            <div class="card-body p-3">
-              <h6 class="card-title mb-1">{{ this.name }}</h6>
+        <div class="card">
+          <img class="card-img-top" data-bs-toggle="modal" data-bs-target="#showModal-{{ this.id }}"
+            src="{{ this.image }} " alt="{{ this.name }}">
+          <div class="card-body p-3">
+            <h6 class="card-title mb-1">{{ this.name }}</h6>
 
-              <div class="restaurant-category mb-1">
-                <i class="fas fa-utensils"></i> {{ this.category }}
+            <div class="restaurant-category mb-1">
+              <i class="fas fa-utensils"></i> {{ this.category }}
+            </div>
+
+            <span class="badge badge-pill badge-danger font-weight-normal">
+              {{ this.rating }}
+              <i class="fas fa-star"></i>
+            </span>
+
+          </div>
+        </div>
+
+        {{!-- buttons --}}
+        <div class="foot">
+          <div class="space"></div>
+          <div class="foot-items">
+            <a class="btn btn-success btn-sm" href="./restaurants/{{ this.id }}">Edit</a>
+            <a class="btn btn-primary btn-sm" href="./restaurants/{{ this.id }}">Detail</a>
+            <form action="/" method="POST" style="display: inline">
+              <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+            </form>
+          </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="showModal-{{ this.id }}" tabindex="-1" aria-labelledby="showModalLabel"
+          aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="showModalLabel">{{ this.name }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
+              <div class="modal-body">
 
-              <span class="badge badge-pill badge-danger font-weight-normal">
-                {{ this.rating }}
-                <i class="fas fa-star"></i>
-              </span>
+                <p class="mb-1">
+                  <span class="text-secondary">
+                    <i class="fas fa-utensils"></i>
+                    類別：
+                  </span>
+                  {{ this.category }}
+                </p>
 
+                <p class="mb-1">
+                  <span class="text-secondary">
+                    <i class="fas fa-map-marker-alt"></i>
+                    地址：
+                  </span>
+                  {{ this.location }}
+                  <a href="{{ this.google_map }}" class="text-secondary" target="_blank">
+                    <i class="fas fa-location-arrow"></i>
+                  </a>
+                </p>
+
+                <p class="mb-1">
+                  <span class="text-secondary">
+                    <i class="fas fa-mobile-alt"></i>
+                    電話：
+                  </span>
+                  {{ this.phone }}
+                </p>
+
+                <p class="mb-5">
+                  {{ this.description }}
+                </p>
+
+                <img class="rounded mx-auto d-block mb-4 w-100" src="{{ this.image }}" alt="{{ this.name }}"
+                  style="max-width: 600px;">
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+                <a class="btn btn-success btn-sm" href="./restaurants/{{ this.id }}">Edit</a>
+                <form action="/" method="POST" style="display: inline">
+                  <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                </form>
+              </div>
             </div>
           </div>
-        </a>
+        </div>
         {{/each}}
       </div>
     </div>
