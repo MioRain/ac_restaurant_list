@@ -13,6 +13,105 @@
         </div>
       </form>
     </div>
+    <div class="new-create mt-3">
+      <h5>找不到喜歡的餐廳？ 自己建一個吧！
+        <span class="create-button" data-bs-toggle="modal" data-bs-target="#createModal">
+          <span>Create</span>
+          <i class="fas fa-plus-circle"></i>
+        </span>
+      </h5>
+
+    </div>
+  </div>
+</div>
+
+<!-- Create Page Modal -->
+<div class="modal fade" id="createModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">新增餐廳</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <form action="/restaurants" method="POST">
+        <div class="modal-body container">
+
+          {{!-- <div class="mb-3">
+            <label for="id" class="form-label">id</label>
+            <input type="text" class="form-control" id="id" name="id" placeholder="id">
+          </div> --}}
+
+          <div class="d-flex justify-content-between">
+            <div class="mb-3">
+              <label for="name" class="form-label">店名<span class="text-danger">*</span></label>
+              <input type="text" class="form-control" id="name" name="name" placeholder="阿娟鴨肉羹咖哩飯" required>
+            </div>
+
+            {{!-- <div class="mb-3">
+              <label for="name_en" class="form-label">英文店名</label>
+              <input type="text" class="form-control" id="name_en" name="name_en"
+                placeholder="A Juan Duck Soup & Curry Rice">
+            </div> --}}
+
+            <div class="mb-3">
+              <label for="category" class="form-label">分類<span class="text-danger">*</span></label>
+              <input type="text" class="form-control" id="category" list="categoryOptions" name="category"
+                placeholder="台式料理" required>
+              <datalist id="categoryOptions">
+                <option value="日本料理">
+                <option value="中東料理">
+                <option value="台式料理">
+                <option value="義式餐廳">
+                <option value="美式">
+                <option value="咖啡">
+                <option value="酒吧">
+              </datalist>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="location" class="form-label">店家地址<span class="text-danger">*</span></label>
+            <input type="text" class="form-control" id="location" name="location" placeholder="700台南市中西區保安路36號"
+              required>
+          </div>
+
+          <div class="mb-3">
+            <label for="phone" class="form-label">連絡電話</label>
+            <input type="tel" class="form-control" id="phone" name="phone" placeholder="06 2248 134"
+              inputmode="numeric">
+          </div>
+
+          <div class="mb-3">
+            <label for="rating" class="form-label">評分<span class="text-danger">*</span></label>
+            <input type="text" class="form-control" id="rating" name="rating" placeholder="4.8" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="image" class="form-label">圖片連結</label>
+            <input type="text" class="form-control" id="image" name="image" placeholder="http://*.jpg or png">
+          </div>
+
+          {{!-- <div class="mb-3">
+            <label for="google_map" class="form-label">Google地圖連結</label>
+            <input type="text" class="form-control" id="google_map" name="google_map" placeholder="google_map">
+          </div> --}}
+
+          <div class="mb-3">
+            <label for="description" class="form-label">店家資訊<span class="text-danger">*</span></label>
+            <textarea rows="3" cols="10" type="text" class="form-control" id="description" name="description"
+              placeholder="台南在地美食！好吃又便宜~ CP值頗高~" required></textarea>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
+          <button type="reset" class="btn btn-secondary">Reset</button>
+          <button type="submit" class="btn btn-primary">Finish</button>
+        </div>
+      </form>
+    </div>
   </div>
 </div>
 

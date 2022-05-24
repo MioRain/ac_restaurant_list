@@ -4,7 +4,10 @@ const express = require('express')
 const exphbs = require('express-handlebars')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
+const translate = require('translate-google')
+
 const Restaurant = require('./models/Restaurant')
+const getMapUrl = require('./public/javascripts/get_mapURL')
 
 const app = express()
 const port = 3000

@@ -82,6 +82,24 @@ header {
   white-space: nowrap;
 }
 
+.new-create {
+  color: #9b4b4b;
+}
+
+.create-button {
+  background-color: #ffe5d4;
+  border: solid 2px #e99a51;
+  border-radius: 10px;
+  padding: 3px;
+  color: #e99a51;
+  font-size: 1rem;
+}
+
+.create-button:hover {
+  background-color: #e99a51;
+  color: #ffffff;
+}
+
 .foot {
   position: absolute;
   right: 0px;
@@ -105,7 +123,7 @@ header {
   text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
-.modal-dialog {
+.fade .modal-dialog-centered {
   max-width: 80%;
 }
 
@@ -126,7 +144,7 @@ header {
     max-width: 600px;
   }
 
-  .modal-dialog {
+  .fade .modal-dialog-centered {
     max-width: 80%;
   }
 }
@@ -137,7 +155,7 @@ header {
     height: auto;
   }
 
-  .modal-dialog {
+  .fade .modal-dialog-centered {
     max-width: 100%;
   }
 }
