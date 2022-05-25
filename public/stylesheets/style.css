@@ -127,6 +127,14 @@ header {
   max-width: 80%;
 }
 
+.mb-5 .d-flex {
+  padding-inline-start: 0px;
+}
+
+#reset {
+  color: #ffffff;
+}
+
 @media screen and (max-width: 992px) {
 
   .card img {
