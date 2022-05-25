@@ -16,6 +16,7 @@ app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
 
 app.use(express.static('public'))
+app.use(bodyParser.urlencoded({ extended: true }))
 
 // MongoDB 連線設定
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -71,6 +72,27 @@ app.get('/restaurants/:restaurant_id', (req, res) => {
     .catch(error => console.error(error))
 })
 
+// create new restaurant
+app.post('/restaurants', (req, res) => {
+  const restaurantOptions = req.body
+  const tranObj = req.body.name
+  const img = req.body.image
+  // if no img use default img
+  if (img === '') {
+    restaurantOptions.image = `http://localhost:${port}/images/default.png`
+  }
+  // find max id in collections
+  Restaurant.find({}).sort({ id: -1 }).limit(1)
+    .then(items => restaurantOptions.id = items[0].id += 1)
+    // get name_en by translate
+    .then(() => translate(tranObj, { to: 'en', except: ['a'] })
+      .then(res => restaurantOptions.name_en = res))
+    // get google map url by use getMapUrl to search name
+    .then(() => restaurantOptions.google_map = getMapUrl(tranObj))
+    // create new restaurant to MongoDB
+    .then(() => Restaurant.create(restaurantOptions))
+    .then(() => res.redirect('/'))
+})
 
 // server listen
 app.listen(port, () => {
