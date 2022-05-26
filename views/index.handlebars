@@ -105,13 +105,11 @@
                 <img class="rounded mx-auto d-block mb-4 w-100" src="{{ this.image }}" alt="{{ this.name }}"
                   style="max-width: 600px;">
               </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
-                <form action="./restaurants/{{ this.id }}/edit" method="POST" style="display: inline">
-                  <button type="submit" class="btn btn-success btn-sm">Edit</button>
-                </form>
+              <div class="modal-footer d-flex justify-content-center">
+                <a href="/" class="btn btn-dark mx-1">Back</a>
+                <a class="btn btn-success mx-1" href="./restaurants/{{ this.id }}/edit">Edit</a>
                 <form action="/restaurants/{{ this.id }}/delete" method="POST">
-                  <button type="submit" class="btn btn-danger btn-sm mx-1">Delete</button>
+                  <button type="submit" class="btn btn-danger mx-1">Delete</button>
                 </form>
               </div>
             </div>

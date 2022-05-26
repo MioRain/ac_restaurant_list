@@ -72,29 +72,7 @@ app.get('/restaurants/:id', (req, res) => {
     .catch(error => console.error(error))
 })
 
-// create new restaurant
-app.post('/restaurants', (req, res) => {
-  const restaurantOptions = req.body
-  const tranObj = req.body.name
-  const img = req.body.image
-  // if no img use default img
-  if (img === '') {
-    restaurantOptions.image = `http://localhost:${port}/images/default.png`
-  }
-  // find max id in collections
-  Restaurant.find({}).sort({ id: -1 }).limit(1)
-    .then(info => restaurantOptions.id = info[0].id += 1)
-    // get name_en by translate
-    .then(() => translate(tranObj, { to: 'en', except: ['a'] })
-      .then(res => restaurantOptions.name_en = res))
-    // get google map url by use getMapUrl to search name
-    .then(() => restaurantOptions.google_map = getMapUrl(tranObj))
-    // create new restaurant to MongoDB
-    .then(() => Restaurant.create(restaurantOptions))
-    .then(() => res.redirect('/'))
-    .catch(error => console.error(error))
-})
-
+// render edit pag
 app.get('/restaurants/:id/edit', (req, res) => {
   const id = req.params.id
   Restaurant.findOne({ id })
@@ -103,6 +81,7 @@ app.get('/restaurants/:id/edit', (req, res) => {
     .catch(error => console.error(error))
 })
 
+// create new restaurant and update restaurant info
 app.post('/restaurants/:id', (req, res) => {
   const restaurantOptions = req.body
   const id = req.params.id
@@ -113,19 +92,31 @@ app.post('/restaurants/:id', (req, res) => {
   if (img === '') {
     restaurantOptions.image = `http://localhost:${port}/images/default.png`
   }
-
-  Restaurant.findOne({ id })
-    .then(info => {
-      translate(tranObj, { to: 'en', except: ['a'] })
-        .then(res => {
-          restaurantOptions.name_en = res
-          restaurantOptions.google_map = getMapUrl(tranObj)
-          Object.keys(restaurantOptions).forEach(key => {
-            info[key] = restaurantOptions[key]
-          })
-          return info.save()
+  // get google map url by use getMapUrl to search name
+  restaurantOptions.google_map = getMapUrl(tranObj)
+  // get name_en by translate
+  translate(tranObj, { to: 'en', except: ['a'] })
+    .then(name_en => {
+      restaurantOptions.name_en = name_en
+      // find restaurant by id
+      Restaurant.findOne({ id })
+        .then(info => {
+          // no info > create new
+          if (info === null) {
+            // find max id
+            Restaurant.find().sort({ id: -1 }).limit(1)
+              .then(info => restaurantOptions.id = info[0].id += 1)
+              .then(() => Restaurant.create(restaurantOptions))
+              .then(() => res.redirect('/'))
+          } else {
+            // update info
+            Object.keys(restaurantOptions).forEach(key => {
+              info[key] = restaurantOptions[key]
+            })
+            info.save()
+              .then(() => res.redirect(`/restaurants/${id}`))
+          }
         })
-        .then(() => res.redirect(`/restaurants/${id}`))
     })
     .catch(error => console.error(error))
 })
