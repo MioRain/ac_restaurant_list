@@ -3,6 +3,7 @@
 一個收藏喜好餐廳的清單頁面。
 
 ![image](/public/images/homepage.png)
+![image](/public/images/homepage2.png)
 
 ## 功能說明
 
@@ -11,6 +12,9 @@
 3. 點擊詳細資料裡的`導航按鈕`可以連結至 `google map`。
 4. 在搜尋欄位可以輸入關鍵字(餐廳中/英文名、類型)篩選餐廳。
 5. 點擊最上層的`我的餐廳清單 `可以返回首頁。
+6. 可以點擊 Create 新增餐廳清單
+7. 可以點擊 Edit 更新清單內容
+8. 可以點擊 Delete 刪除目標餐廳
 
 ## 環境建置
 - Visual Studio Code
@@ -29,13 +33,22 @@ git clone https://github.com/MioRain/ac_restaurant_list.git
 ```
 cd ac_restaurant_list
 npm install nodemon
-npm install
+npm install dotenv
 ```
-3. 啟動伺服器
+2. 在根目錄創建 .env 檔案，並輸入以下資料 id:password 請自行更改帳號:密碼  
+MONGODB_URI = mongodb+srv://`id:password`@cluster0.un1ij.mongodb.net/restaurant-list?retryWrites=true&w=majority
+
+3. 輸入種子資料
+```
+npm run seed
+```
+
+4. 啟動伺服器
 ```
 npm run dev
 ```
-4. 當出現以下畫面，即可於瀏覽器網址內輸入 `http://localhost:3000` 進入餐廳清單囉！
+5. 當出現以下畫面，即可於瀏覽器網址內輸入 `http://localhost:3000` 進入餐廳清單囉！
 ```
 The Express server is running on http://localhost:3000
+MongoDB connected!
 ```
