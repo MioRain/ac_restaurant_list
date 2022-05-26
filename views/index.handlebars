@@ -52,7 +52,7 @@
             <div class="foot-items">
               <a class="btn btn-success btn-sm" href="./restaurants/{{ this.id }}/edit">Edit</a>
               <a class="btn btn-primary btn-sm" href="./restaurants/{{ this.id }}">Detail</a>
-              <form action="/" method="POST" style="display: inline">
+              <form action="/restaurants/{{ this.id }}/delete" method="POST" style="display: inline">
                 <button type="submit" class="btn btn-danger btn-sm">Delete</button>
               </form>
             </div>
@@ -110,8 +110,8 @@
                 <form action="./restaurants/{{ this.id }}/edit" method="POST" style="display: inline">
                   <button type="submit" class="btn btn-success btn-sm">Edit</button>
                 </form>
-                <form action="/" method="POST" style="display: inline">
-                  <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                <form action="/restaurants/{{ this.id }}/delete" method="POST">
+                  <button type="submit" class="btn btn-danger btn-sm mx-1">Delete</button>
                 </form>
               </div>
             </div>

@@ -130,6 +130,15 @@ app.post('/restaurants/:id', (req, res) => {
     .catch(error => console.error(error))
 })
 
+// delete restaurant
+app.post('/restaurants/:id/delete', (req, res) => {
+  const id = req.params.id
+  Restaurant.findOne({ id })
+    .then(restaurant => restaurant.remove())
+    .then(() => res.redirect('/'))
+    .catch(error => console.error(error))
+})
+
 // server listen
 app.listen(port, () => {
   console.log(`The Express server is running on http://localhost:${port}`)

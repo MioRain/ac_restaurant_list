@@ -41,7 +41,7 @@
         <a href="/" class="btn btn-dark btn-lg mx-1">Back</a>
         <a class="btn btn-success btn-lg mx-1" data-bs-toggle="modal" data-bs-target="#createModal"
           href="./restaurants/{{ this.id }}/edit">Edit</a>
-        <form action="/restaurants/:id/edit" method="POST">
+        <form action="/restaurants/{{ restaurant.id }}/delete" method="POST">
           <button type="submit" class="btn btn-danger btn-lg mx-1">Delete</button>
         </form>
       </dir>
