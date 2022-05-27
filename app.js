@@ -5,6 +5,7 @@ const exphbs = require('express-handlebars')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 const translate = require('translate-google')
+const methodOverride = require('method-override')
 
 const Restaurant = require('./models/Restaurant')
 const getMapUrl = require('./public/javascripts/get_mapURL')
@@ -32,6 +33,7 @@ db.once('open', () => {
 })
 
 // 路由設計
+app.use(methodOverride('_method'))
 
 // render index
 app.get('/', (req, res) => {
@@ -81,10 +83,9 @@ app.get('/restaurants/:id/edit', (req, res) => {
     .catch(error => console.error(error))
 })
 
-// create new restaurant and update restaurant info
-app.post('/restaurants/:id', (req, res) => {
+// create  new restaurant
+app.post('/restaurants', (req, res) => {
   const restaurantOptions = req.body
-  const id = req.params.id
   const tranObj = req.body.name
   const img = req.body.image
 
@@ -98,31 +99,42 @@ app.post('/restaurants/:id', (req, res) => {
   translate(tranObj, { to: 'en', except: ['a'] })
     .then(name_en => {
       restaurantOptions.name_en = name_en
-      // find restaurant by id
+      Restaurant.find().sort({ id: -1 }).limit(1)
+        .then(info => restaurantOptions.id = info[0].id += 1)
+        .then(() => Restaurant.create(restaurantOptions))
+        .then(() => res.redirect('/'))
+    })
+    .catch(error => console.error(error))
+})
+
+// update restaurant info
+app.put('/restaurants/:id', (req, res) => {
+  const restaurantOptions = req.body
+  const id = req.params.id
+  const tranObj = req.body.name
+  const img = req.body.image
+
+  if (img === '') {
+    restaurantOptions.image = `http://localhost:${port}/images/default.png`
+  }
+  restaurantOptions.google_map = getMapUrl(tranObj)
+  translate(tranObj, { to: 'en', except: ['a'] })
+    .then(name_en => {
+      restaurantOptions.name_en = name_en
       Restaurant.findOne({ id })
         .then(info => {
-          // no info > create new
-          if (info === null) {
-            // find max id
-            Restaurant.find().sort({ id: -1 }).limit(1)
-              .then(info => restaurantOptions.id = info[0].id += 1)
-              .then(() => Restaurant.create(restaurantOptions))
-              .then(() => res.redirect('/'))
-          } else {
-            // update info
-            Object.keys(restaurantOptions).forEach(key => {
-              info[key] = restaurantOptions[key]
-            })
-            info.save()
-              .then(() => res.redirect(`/restaurants/${id}`))
-          }
+          Object.keys(restaurantOptions).forEach(key => {
+            info[key] = restaurantOptions[key]
+          })
+          info.save()
+            .then(() => res.redirect(`/restaurants/${id}`))
         })
     })
     .catch(error => console.error(error))
 })
 
 // delete restaurant
-app.post('/restaurants/:id/delete', (req, res) => {
+app.delete('/restaurants/:id', (req, res) => {
   const id = req.params.id
   Restaurant.findOne({ id })
     .then(restaurant => restaurant.remove())

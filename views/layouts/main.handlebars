@@ -38,9 +38,9 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         {{#if restaurant.id}}
-        <form action="/restaurants/{{restaurant.id}}" method="POST">
+        <form action="/restaurants/{{restaurant.id}}?_method=PUT" method="POST">
           {{else}}
-          <form action="/restaurants/0" method="POST">
+          <form action="/restaurants" method="POST">
             {{/if}}
             <div class="modal-body container">
 

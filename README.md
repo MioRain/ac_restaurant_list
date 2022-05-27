@@ -23,6 +23,7 @@
 - Mongoose(6.3.4) + Mongoose-connect(0.0.3)
 - dotenv(16.0.1)
 - translate-google(1.5.0)
+- method-override(3.0.0)
 
 ## 安裝與執行步驟
 1. 使用終端機(Terminal)下載此專案
