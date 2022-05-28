@@ -22,6 +22,15 @@
             width="30" height="30" class="d-inline-block align-top" alt="我的餐廳清單">
           我的餐廳清單
         </a>
+        {{#if restaurant.id}}
+        {{else}}
+        <div class="new-create">
+          <div class="create-button" data-bs-toggle="modal" data-bs-target="#createModal">
+            <span>Create</span>
+            <i class="fas fa-plus-circle"></i>
+          </div>
+          {{/if}}
+        </div>
       </div>
     </nav>
 

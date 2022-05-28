@@ -95,20 +95,20 @@ header {
 }
 
 .new-create {
-  color: #9b4b4b;
+  color: #4592af;
 }
 
 .create-button {
-  background-color: #ffe5d4;
-  border: solid 2px #e99a51;
+  background-color: #e8f4ff;
+  border: solid 2px #4592af;
   border-radius: 10px;
   padding: 3px;
-  color: #e99a51;
+  color: #4592af;
   font-size: 1rem;
 }
 
 .create-button:hover {
-  background-color: #e99a51;
+  background-color: #4592af;
   color: #ffffff;
 }
 
