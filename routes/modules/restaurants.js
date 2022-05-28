@@ -5,10 +5,12 @@ const getMapUrl = require('../../public/javascripts/get_mapURL')
 
 const router = express.Router()
 
-// search restaurant
+// search restaurant and sort
 router.get('/search', (req, res) => {
   const keyword = req.query.keyword
+  const sort = req.query.sort
   const $regex = new RegExp(keyword.trim(), 'i')
+
   Restaurant.find({
     $or: [
       {
@@ -22,6 +24,7 @@ router.get('/search', (req, res) => {
       }
     ],
   })
+    .sort(sort)
     .lean()
     .then(restaurants => res.render('index', { restaurants, keyword }))
     .catch(error => console.error(error))
