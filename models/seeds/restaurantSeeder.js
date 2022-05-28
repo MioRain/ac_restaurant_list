@@ -6,8 +6,11 @@ db.once('open', () => {
   console.log('Creating seeds......')
 
   Restaurant.create(restaurantList)
-
-  console.log('Done!')
+    .then(() => {
+      console.log("restaurantSeeder done!")
+    })
+    .catch(err => console.log(err))
+    .finally(() => db.close())
 })
 
 module.exports = db
