@@ -8,7 +8,7 @@ const Restaurant = require('./models/Restaurant')
 const routes = require('./routes')
 
 const app = express()
-const port = 3000
+const PORT = process.env.PORT || 3000
 
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
@@ -21,6 +21,6 @@ app.use(methodOverride('_method'))
 app.use(routes)
 
 // server listen
-app.listen(port, () => {
-  console.log(`The Express server is running on http://localhost:${port}`)
+app.listen(PORT, () => {
+  console.log(`The Express server is running on http://localhost:${PORT}`)
 })
