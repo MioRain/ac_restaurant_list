@@ -1,5 +1,5 @@
 const express = require('express')
-const translate = require('translate-google')
+// const translate = require('translate-google')
 const Restaurant = require('../../models/Restaurant')
 const getMapUrl = require('../../public/javascripts/get_mapURL')
 
@@ -7,20 +7,19 @@ const router = express.Router()
 
 // search restaurant and sort
 router.get('/search', (req, res) => {
-  const keyword = req.query.keyword
-  const sort = req.query.sort
+  const { keyword, sort } = req.query
   const $regex = new RegExp(keyword.trim(), 'i')
 
   Restaurant.find({
     $or: [
       {
-        name: { $regex },
+        name: $regex,
       }, {
-        name_en: { $regex },
+        name_en: $regex,
       }, {
-        category: { $regex },
+        category: $regex,
       }, {
-        location: { $regex }
+        location: $regex
       }
     ],
   })
@@ -61,14 +60,14 @@ router.post('/', (req, res) => {
   // get google map url by use getMapUrl to search name
   restaurantOptions.google_map = getMapUrl(tranObj)
   // get name_en by translate
-  translate(tranObj, { to: 'en', except: ['a'] })
-    .then(name_en => {
-      restaurantOptions.name_en = name_en
-      Restaurant.find().sort({ id: -1 }).limit(1)
-        .then(info => restaurantOptions.id = info[0].id += 1)
-        .then(() => Restaurant.create(restaurantOptions))
-        .then(() => res.redirect('/'))
-    })
+  // translate(tranObj, { to: 'en', except: ['a'] })
+  // .then(en => restaurantOptions.name_en = en)
+  Restaurant.find()
+    .sort({ id: -1 })
+    .limit(1)
+    .then(info => restaurantOptions.id = info[0].id += 1)
+    .then(() => Restaurant.create(restaurantOptions))
+    .then(() => res.redirect('/'))
     .catch(error => console.error(error))
 })
 
@@ -80,20 +79,18 @@ router.put('/:id', (req, res) => {
   const img = req.body.image
 
   if (img === '') {
-    restaurantOptions.image = `http://localhost:${port}/images/default.png`
+    restaurantOptions.image = `http://localhost:3000/images/default.png`
   }
   restaurantOptions.google_map = getMapUrl(tranObj)
-  translate(tranObj, { to: 'en', except: ['a'] })
-    .then(name_en => {
-      restaurantOptions.name_en = name_en
-      Restaurant.findOne({ id })
-        .then(info => {
-          Object.keys(restaurantOptions).forEach(key => {
-            info[key] = restaurantOptions[key]
-          })
-          info.save()
-            .then(() => res.redirect(`/restaurants/${id}`))
-        })
+  // translate(tranObj, { to: 'en', except: ['a'] })
+  //   .then(en => restaurantOptions.name_en = en)
+  Restaurant.findOne({ id })
+    .then(info => {
+      Object.keys(restaurantOptions).forEach(key => {
+        info[key] = restaurantOptions[key]
+      })
+      info.save()
+        .then(() => res.redirect(`/restaurants/${id}`))
     })
     .catch(error => console.error(error))
 })
