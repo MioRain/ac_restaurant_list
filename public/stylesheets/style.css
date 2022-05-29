@@ -42,6 +42,12 @@ header {
   color: #9b4b4b;
 }
 
+.search-error {
+  color: #c43636;
+  margin: 15px 0px 0px 10px;
+  font-size: 2vh;
+}
+
 .input-group {
   width: 70%;
 }
