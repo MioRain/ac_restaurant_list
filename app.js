@@ -7,6 +7,7 @@ const methodOverride = require('method-override')
 const Restaurant = require('./models/Restaurant')
 const routes = require('./routes')
 const session = require('express-session')
+const usePassport = require('./config/passport')
 
 const app = express()
 const PORT = process.env.PORT || 3000
@@ -22,6 +23,8 @@ app.use(session({
   resave: false,
   saveUninitialized: true
 }))
+
+usePassport(app)
 
 // 路由設計
 app.use(methodOverride('_method'))
