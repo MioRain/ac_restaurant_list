@@ -32,7 +32,8 @@ router.get('/search', (req, res) => {
 // browse restaurant detail
 router.get('/:id', (req, res) => {
   const id = req.params.id
-  Restaurant.findOne({ id })
+  const userId = req.user._id
+  Restaurant.findOne({ id, userId })
     .lean()
     .then(restaurant => res.render('show', { restaurant }))
     .catch(error => console.error(error))
@@ -41,7 +42,8 @@ router.get('/:id', (req, res) => {
 // render edit pag
 router.get('/:id/edit', (req, res) => {
   const id = req.params.id
-  Restaurant.findOne({ id })
+  const userId = req.user._id
+  Restaurant.findOne({ id, userId })
     .lean()
     .then(restaurant => res.render('edit', { restaurant }))
     .catch(error => console.error(error))
@@ -52,6 +54,8 @@ router.post('/', (req, res) => {
   const restaurantOptions = req.body
   const tranObj = req.body.name
   const img = req.body.image
+
+  restaurantOptions.userId = req.user._id
 
   // if no img use default img
   if (img === '') {
@@ -79,6 +83,7 @@ router.put('/:id', (req, res) => {
   const id = req.params.id
   const tranObj = req.body.name
   const img = req.body.image
+  const userId = req.user._id
 
   if (img === '') {
     restaurantOptions.image = `http://${req.get('host')}/images/default.png`
@@ -87,7 +92,7 @@ router.put('/:id', (req, res) => {
   translate(tranObj, { to: 'en' })
     .then(name_en => {
       restaurantOptions.name_en = name_en.text
-      Restaurant.findOne({ id })
+      Restaurant.findOne({ id, userId })
         .then(info => {
           Object.keys(restaurantOptions).forEach(key => {
             info[key] = restaurantOptions[key]
@@ -102,7 +107,8 @@ router.put('/:id', (req, res) => {
 // delete restaurant
 router.delete('/:id', (req, res) => {
   const id = req.params.id
-  Restaurant.findOne({ id })
+  const userId = req.user._id
+  Restaurant.findOne({ id, userId })
     .then(restaurant => restaurant.remove())
     .then(() => res.redirect('/'))
     .catch(error => console.error(error))
