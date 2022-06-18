@@ -6,6 +6,7 @@ const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
 const Restaurant = require('./models/Restaurant')
 const routes = require('./routes')
+const session = require('express-session')
 
 const app = express()
 const PORT = process.env.PORT || 3000
@@ -15,6 +16,12 @@ app.set('view engine', 'handlebars')
 
 app.use(express.static('public'))
 app.use(bodyParser.urlencoded({ extended: true }))
+
+app.use(session({
+  secret: 'ThisIsMySecret',
+  resave: false,
+  saveUninitialized: true
+}))
 
 // 路由設計
 app.use(methodOverride('_method'))
