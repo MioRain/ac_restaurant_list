@@ -9,8 +9,10 @@ const router = express.Router()
 router.get('/search', (req, res) => {
   const { keyword, sort } = req.query
   const $regex = new RegExp(keyword.trim(), 'i')
+  const userId = req.user._id
 
   Restaurant.find({
+    userId,
     $or: [
       {
         name: $regex,
