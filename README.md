@@ -2,8 +2,8 @@
 
 一個收藏喜好餐廳的清單頁面。
 
-![image](/public/images/homepage.png)
-![image](/public/images/homepage2.png)
+![image](/public/images/homepage3.png)
+![image](/public/images/homepage4.png)
 
 ## 功能說明
 
@@ -15,12 +15,16 @@
 6. 可以點擊 Create 新增餐廳清單
 7. 可以點擊 Edit 更新清單內容
 8. 可以點擊 Delete 刪除目標餐廳
+9. 可以註冊使用者帳戶
+10. 可以登入使用者帳戶
+11. 可以登出使用者帳戶
 
 ## 環境建置
 - Visual Studio Code
 - Node.js + Express(4.16.4)
 - Express-handlebars(3.0.0)
 - Mongoose(6.3.4) + Mongoose-connect(0.0.3)
+- passport(0.4.1) + passport-facebook(3.0.0)
 
 ## 安裝與執行步驟
 1. 使用終端機(Terminal)下載此專案
@@ -31,7 +35,7 @@ git clone https://github.com/MioRain/ac_restaurant_list.git
 ```
 cd ac_restaurant_list & npm install
 ```
-2. 在根目錄創建 .env 檔案，並輸入以下資料 id:password 請自行更改帳號:密碼  
+2. 根據 .env.example 創建 .env 檔案並替換內容
 MONGODB_URI = mongodb+srv://`id:password`@cluster0.un1ij.mongodb.net/restaurant-list?retryWrites=true&w=majority
 
 3. 輸入種子資料
@@ -43,8 +47,18 @@ npm run seed
 ```
 npm run dev
 ```
-5. 當出現以下畫面，即可於瀏覽器網址內輸入 `http://localhost:3000` 進入餐廳清單囉！
+5. 當出現以下畫面，即可於瀏覽器網址內輸入 `http://localhost:3000` 進入首頁囉！
 ```
 The Express server is running on http://localhost:3000
 MongoDB connected!
+```
+
+測試用帳號密碼
+```
+email:user1@example.com
+password:12345678
+```
+```
+email:user2@example.com
+password:12345678
 ```
